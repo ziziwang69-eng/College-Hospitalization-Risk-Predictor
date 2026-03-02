@@ -34,6 +34,7 @@ scl_dict = {
     "SCL_15": "Suicidal thoughts",
     "SCL_20": "Crying easily",
     "SCL_21": "Uneasy with opposite sex",
+    "SCL_24": "Temper outbursts",
     "SCL_26": "Self-blame",
     "SCL_28": "Difficulty completing tasks",
     "SCL_32": "Loss of interest",
@@ -45,15 +46,15 @@ scl_dict = {
     "SCL_90": "Feeling mind is wrong"
 }
 
-# 5 列布局，15个特征正好 3 行，极大地节省垂直空间
+# 5 列布局，极大地节省垂直空间
 cols = st.columns(5)
 user_inputs = {}
 
 for i, feature in enumerate(features):
     with cols[i % 5]:
-        # 动态匹配英文简写，格式为 "SCL_X (English)"
+        # 动态匹配英文简写，格式反转为 "English (SCL_X)"
         desc = scl_dict.get(feature, "")
-        display_label = f"{feature} ({desc})" if desc else feature
+        display_label = f"{desc} ({feature})" if desc else feature
         
         user_inputs[feature] = st.number_input(
             label=display_label, 
