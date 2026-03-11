@@ -23,7 +23,8 @@ except Exception:
     st.error("Model components not found. Please ensure all 5 .pkl files are in the directory.")
     st.stop()
 
-st.markdown("<h1 style='text-align: center;'>Prediction Model for Hospitalization Risk</h1>", unsafe_allow_html=True)
+# 【修改点 1】：大标题将 Hospitalization 替换为 Clinical Intervention
+st.markdown("<h1 style='text-align: center;'>Prediction Model for Clinical Intervention Risk</h1>", unsafe_allow_html=True)
 st.write("")
 
 # SCL-90 核心特征官方英文精简对照表 (基于 SCL-90 国际标准原版)
@@ -89,8 +90,8 @@ if predict_btn:
     
     st.markdown("---")
     
-    # 预测概率（50px极大化字号）
-    st.markdown(f"<div style='text-align: center; font-size: 50px; font-weight: 900; color: #1f77b4; margin-bottom: 20px;'>The predicted probability of hospitalization risk is {risk_prob * 100:.1f}%.</div>", unsafe_allow_html=True)
+    # 【修改点 2】：概率提示语将 hospitalization risk 替换为 requiring clinical psychiatric intervention
+    st.markdown(f"<div style='text-align: center; font-size: 50px; font-weight: 900; color: #1f77b4; margin-bottom: 20px;'>The predicted probability of requiring clinical psychiatric intervention is {risk_prob * 100:.1f}%.</div>", unsafe_allow_html=True)
     
     # 静态高清红蓝力图（缩小字号并拉宽画布，防止文字重叠）
     plt.clf() 
@@ -115,9 +116,11 @@ if predict_btn:
     
     # 临床干预建议（45px极大化字号，去前缀，二元绝对分流）
     if risk_prob < threshold:
-        st.markdown("<div style='text-align: center; font-size: 45px; font-weight: 900; color: #2e7d32;'>On-campus psychological counseling</div>", unsafe_allow_html=True)
+        # 【修改点 3】：低风险建议，加了一个 Routine，显得更专业
+        st.markdown("<div style='text-align: center; font-size: 45px; font-weight: 900; color: #2e7d32;'>Routine on-campus psychological counseling</div>", unsafe_allow_html=True)
     else:
-        st.markdown("<div style='text-align: center; font-size: 45px; font-weight: 900; color: #d32f2f;'>Timely medical treatment</div>", unsafe_allow_html=True)
+        # 【修改点 4】：高风险建议，从泛泛的 Timely medical treatment 升级为专业的 Immediate psychiatric referral
+        st.markdown("<div style='text-align: center; font-size: 45px; font-weight: 900; color: #d32f2f;'>Immediate psychiatric referral</div>", unsafe_allow_html=True)
     
     # 底部的免责声明
     st.markdown("<p style='text-align: center; font-size: 14px; color: gray; margin-top: 30px;'>The evaluation results are for clinical screening and university management reference only, and cannot replace formal face-to-face diagnosis by a professional psychiatrist.</p>", unsafe_allow_html=True)
